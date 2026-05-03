@@ -29,6 +29,19 @@ app.get("/messages/:id", (req, res) => {
   res.json(message);
 });
 
+app.post("/messages", (req, res) => {
+  console.log(req.params.id);
+  const { id, text } = req.body;
+
+  const exist = messages.find((m) => m.id === id);
+  if (exist) {
+    return res.json({ error: " message already exsit" });
+  }
+  const newMessage = { id, text };
+  messages.push(newMessage);
+  res.status(201).json(messages);
+});
+
 app.put("/messages/:id", (req, res) => {
   console.log(req.params.id);
   const id = parseInt(req.params.id);
