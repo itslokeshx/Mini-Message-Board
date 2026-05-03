@@ -56,7 +56,7 @@ export const updateMessage = async (req, res) => {
     const updated = await Message.findOneAndUpdate(
       { id },
       { text },
-      { new: true },
+      { returnDocument: "after" },
     );
 
     if (!updated) {
