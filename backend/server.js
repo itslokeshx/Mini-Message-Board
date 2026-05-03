@@ -19,8 +19,11 @@ app.get("/messages", (req, res) => {
 app.get("/messages/:id", (req, res) => {
   console.log(req.params.id);
   const id = parseInt(req.params.id);
-  const message = messages.find((m) => m.id == id);
-  res.json(message.text);
+  const message = messages.find((m) => m.id === id);
+  if (!message) {
+    return res.status(404).json({ error: "Message not found :<" });
+  }
+  res.json(message);
 });
 
 app.listen(port, () => {
