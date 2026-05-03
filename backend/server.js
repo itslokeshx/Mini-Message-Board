@@ -10,12 +10,15 @@ let messages = [
   { id: 17, text: "AB de Villiers" },
   { id: 45, text: "Rohit Sharma" },
 ];
+
 app.get("/", (req, res) => {
   res.send("<h1>Server is runnning!</h1>");
 });
+
 app.get("/messages", (req, res) => {
   res.json(messages);
 });
+
 app.get("/messages/:id", (req, res) => {
   console.log(req.params.id);
   const id = parseInt(req.params.id);
@@ -26,6 +29,20 @@ app.get("/messages/:id", (req, res) => {
   res.json(message);
 });
 
+app.put("/messages/:id", (req, res) => {
+  console.log(req.params.id);
+  const id = parseInt(req.params.id);
+  const { text } = req.body;
+  const message = messages.find((m) => m.id === id);
+  if (!message) {
+    return res.status(404).json({ error: "Message not found :<" });
+  }
+  if (!text) {
+    return res.json("Enter the text!");
+  }
+  message.text = text;
+  res.json(message);
+});
 app.listen(port, () => {
   console.log(`The server is running in the ${port}`);
 });
