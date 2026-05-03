@@ -44,31 +44,44 @@ export const createMessage = async (req, res) => {
 };
 
 //PUT
-export const updateMessage = (req, res) => {
-  const id = parseInt(req.params.id);
-  const { text } = req.body;
+export const updateMessage = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const { text } = req.body;
 
-  const message = messages.find((m) => m.id === id);
+    if (!text) {
+      return res.status(400).json({ error: "Text is required" });
+    }
 
-  if (!message) {
-    return res.status(404).json({ error: "Message not found" });
+    const updated = await Message.findOneAndUpdate(
+      { id },
+      { text },
+      { new: true },
+    );
+
+    if (!updated) {
+      return res.status(404).json({ error: "Message not found" });
+    }
+
+    res.json(updated);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-
-  message.text = text;
-  res.json(message);
 };
 
 //DELETE
-export const deleteMessage = (req, res) => {
-  const id = parseInt(req.params.id);
+export const deleteMessage = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
 
-  const index = messages.findIndex((m) => m.id === id);
+    const deleted = await Message.findOneAndDelete({ id });
 
-  if (index === -1) {
-    return res.status(404).json({ error: "Message not found" });
+    if (!deleted) {
+      return res.status(404).json({ error: "Message not found" });
+    }
+
+    res.json({ message: "Deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-
-  messages.splice(index, 1);
-
-  res.json({ message: "Deleted successfully" });
 };
