@@ -4,15 +4,23 @@ const app = express();
 app.use(express.json());
 const port = 8000;
 let messages = [
-  { id: 1, text: "kohli" },
-  { id: 2, text: "Dhoni" },
-  { id: 3, text: "Rahul" },
+  { id: 18, text: "Virat Kohli" },
+  { id: 1, text: "KL Rahul" },
+  { id: 7, text: "MS Dhoni" },
+  { id: 17, text: "AB de Villiers" },
+  { id: 45, text: "Rohit Sharma" },
 ];
 app.get("/", (req, res) => {
   res.send("<h1>Server is runnning!</h1>");
 });
 app.get("/messages", (req, res) => {
-  res.send(messages);
+  res.json(messages);
+});
+app.get("/messages/:id", (req, res) => {
+  console.log(req.params.id);
+  const id = parseInt(req.params.id);
+  const message = messages.find((m) => m.id == id);
+  res.json(message.text);
 });
 
 app.listen(port, () => {
