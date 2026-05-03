@@ -1,8 +1,16 @@
 import express from "express";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+dotenv.config();
+
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => console.log("MongoDB Connected ✅"))
+  .catch((err) => console.log(err));
 
 const app = express();
 app.use(express.json());
-const port = 8000;
+const PORT = process.env.PORT;
 let messages = [
   { id: 18, text: "Virat Kohli" },
   { id: 1, text: "KL Rahul" },
@@ -64,6 +72,6 @@ app.delete("/messages/:id", (req, res) => {
   messages.splice(index, 1);
   res.json(messages);
 });
-app.listen(port, () => {
-  console.log(`The server is running in the ${port}`);
+app.listen(PORT, () => {
+  console.log(`The server is running in the ${PORT}`);
 });
