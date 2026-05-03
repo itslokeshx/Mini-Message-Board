@@ -34,9 +34,9 @@ export const createMessage = async (req, res) => {
     }
     const exists = await Message.findOne({ id });
     if (exists) {
-      return res.stats(400).json({ error: "ID Already exist!" });
+      return res.status(400).json({ error: "ID Already exist!" });
     }
-    const newMessage = Message.create(id, text);
+    const newMessage = await Message.create({ id, text });
     res.status(201).json(newMessage);
   } catch (error) {
     res.status(500).json({ error: error.message });
