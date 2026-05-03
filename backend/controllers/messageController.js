@@ -16,6 +16,22 @@ export const getMessageById = (req, res) => {
 };
 
 //POST
+export const createMessage = async (req, res) => {
+  try {
+    const { id, text } = req.body;
+    if (id == undefined || !text) {
+      return res.status(400).json({ error: "id and text both needed!" });
+    }
+    const exits = await Message.findOne({ id });
+    if (exists) {
+      return res.stats(400).json({ error: "ID Already exist!" });
+    }
+    const newMessage = Message.create(id, text);
+    res.status(201).json(newMessage);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 //PUT
 export const updateMessage = (req, res) => {
