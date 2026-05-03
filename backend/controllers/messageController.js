@@ -1,15 +1,9 @@
-let messages = [
-  { id: 18, text: "Virat Kohli" },
-  { id: 1, text: "KL Rahul" },
-  { id: 7, text: "MS Dhoni" },
-  { id: 17, text: "AB de Villiers" },
-  { id: 45, text: "Rohit Sharma" },
-];
+import Message from "../models/Messages.js";
 
 export const getMessages = (req, res) => {
   res.json(messages);
 };
-
+//GET
 export const getMessageById = (req, res) => {
   const id = parseInt(req.params.id);
   const message = messages.find((m) => m.id === id);
@@ -21,20 +15,9 @@ export const getMessageById = (req, res) => {
   res.json(message);
 };
 
-export const createMessage = (req, res) => {
-  const { id, text } = req.body;
+//POST
 
-  const exist = messages.find((m) => m.id === id);
-  if (exist) {
-    return res.status(400).json({ error: "ID already exists" });
-  }
-
-  const newMessage = { id, text };
-  messages.push(newMessage);
-
-  res.status(201).json(newMessage);
-};
-
+//PUT
 export const updateMessage = (req, res) => {
   const id = parseInt(req.params.id);
   const { text } = req.body;
@@ -49,6 +32,7 @@ export const updateMessage = (req, res) => {
   res.json(message);
 };
 
+//DELETE
 export const deleteMessage = (req, res) => {
   const id = parseInt(req.params.id);
 
