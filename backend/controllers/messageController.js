@@ -6,12 +6,10 @@ let messages = [
   { id: 45, text: "Rohit Sharma" },
 ];
 
-// GET all
 export const getMessages = (req, res) => {
   res.json(messages);
 };
 
-// GET by ID
 export const getMessageById = (req, res) => {
   const id = parseInt(req.params.id);
   const message = messages.find((m) => m.id === id);
@@ -23,7 +21,6 @@ export const getMessageById = (req, res) => {
   res.json(message);
 };
 
-// POST
 export const createMessage = (req, res) => {
   const { id, text } = req.body;
 
@@ -38,7 +35,6 @@ export const createMessage = (req, res) => {
   res.status(201).json(newMessage);
 };
 
-// PUT
 export const updateMessage = (req, res) => {
   const id = parseInt(req.params.id);
   const { text } = req.body;
@@ -53,7 +49,6 @@ export const updateMessage = (req, res) => {
   res.json(message);
 };
 
-// DELETE
 export const deleteMessage = (req, res) => {
   const id = parseInt(req.params.id);
 
