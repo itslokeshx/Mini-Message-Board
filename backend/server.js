@@ -20,7 +20,6 @@ app.get("/messages", (req, res) => {
 });
 
 app.get("/messages/:id", (req, res) => {
-  console.log(req.params.id);
   const id = parseInt(req.params.id);
   const message = messages.find((m) => m.id === id);
   if (!message) {
@@ -30,7 +29,6 @@ app.get("/messages/:id", (req, res) => {
 });
 
 app.post("/messages", (req, res) => {
-  console.log(req.params.id);
   const { id, text } = req.body;
 
   const exist = messages.find((m) => m.id === id);
@@ -43,7 +41,6 @@ app.post("/messages", (req, res) => {
 });
 
 app.put("/messages/:id", (req, res) => {
-  console.log(req.params.id);
   const id = parseInt(req.params.id);
   const { text } = req.body;
   const message = messages.find((m) => m.id === id);
@@ -55,6 +52,17 @@ app.put("/messages/:id", (req, res) => {
   }
   message.text = text;
   res.json(message);
+});
+
+app.delete("/messages/:id", (req, res) => {
+  console.log(req.params.id);
+  const id = parseInt(req.params.id);
+  const index = messages.findIndex((m) => m.id === id);
+  if (index === -1) {
+    return res.status(404).json({ error: "Message not found :<" });
+  }
+  messages.splice(index, 1);
+  res.json(messages);
 });
 app.listen(port, () => {
   console.log(`The server is running in the ${port}`);
