@@ -1,18 +1,28 @@
 import Message from "../models/Messages.js";
 
-export const getMessages = (req, res) => {
-  res.json(messages);
+export const getMessages = async (req, res) => {
+  try {
+    const messages = await Message.find();
+    res.json(messages);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 //GET
-export const getMessageById = (req, res) => {
-  const id = parseInt(req.params.id);
-  const message = messages.find((m) => m.id === id);
+export const getMessageById = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
 
-  if (!message) {
-    return res.status(404).json({ error: "Message not found" });
+    const message = await Message.findOne({ id });
+
+    if (!message) {
+      return res.status(404).json({ error: "Message not found" });
+    }
+
+    res.json(message);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-
-  res.json(message);
 };
 
 //POST
