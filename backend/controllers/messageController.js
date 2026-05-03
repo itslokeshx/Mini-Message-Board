@@ -32,7 +32,7 @@ export const createMessage = async (req, res) => {
     if (id == undefined || !text) {
       return res.status(400).json({ error: "id and text both needed!" });
     }
-    const exits = await Message.findOne({ id });
+    const exists = await Message.findOne({ id });
     if (exists) {
       return res.stats(400).json({ error: "ID Already exist!" });
     }
