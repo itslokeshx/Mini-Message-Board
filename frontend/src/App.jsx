@@ -1,12 +1,12 @@
 import { useEffect, useState, useCallback } from "react";
-import { 
-  Send, 
-  Pencil, 
-  Trash2, 
-  MessageSquare, 
+import {
+  Send,
+  Pencil,
+  Trash2,
+  MessageSquare,
   Plus,
   X,
-  Check
+  Check,
 } from "lucide-react";
 import "./index.css";
 
@@ -63,7 +63,7 @@ function App() {
       }
 
       const newMessage = await response.json();
-      setMessages(prev => [newMessage, ...prev]);
+      setMessages((prev) => [newMessage, ...prev]);
       setInputMessage("");
       showToast("Message created successfully");
     } catch (error) {
@@ -82,7 +82,7 @@ function App() {
 
       if (!response.ok) throw new Error("Failed to delete message");
 
-      setMessages(prev => prev.filter(msg => msg._id !== id));
+      setMessages((prev) => prev.filter((msg) => msg._id !== id));
       showToast("Message deleted");
     } catch (error) {
       showToast("Failed to delete message", "error");
@@ -119,8 +119,10 @@ function App() {
       }
 
       const updatedMessage = await response.json();
-      setMessages(prev =>
-        prev.map(msg => (msg._id === updatedMessage._id ? updatedMessage : msg))
+      setMessages((prev) =>
+        prev.map((msg) =>
+          msg._id === updatedMessage._id ? updatedMessage : msg,
+        ),
       );
       closeEditModal();
       showToast("Message updated successfully");
@@ -146,7 +148,14 @@ function App() {
         {/* Header */}
         <header className="header">
           <h1>
-            <MessageSquare style={{ display: "inline", marginRight: "12px", verticalAlign: "middle" }} size={32} />
+            <MessageSquare
+              style={{
+                display: "inline",
+                marginRight: "12px",
+                verticalAlign: "middle",
+              }}
+              size={32}
+            />
             Message Board
           </h1>
           <p>A clean, minimal space for your thoughts</p>
@@ -157,7 +166,14 @@ function App() {
           <form onSubmit={handleSubmit} className="input-form">
             <div className="input-group">
               <label htmlFor="message" className="input-label">
-                <Plus size={14} style={{ display: "inline", marginRight: "6px", verticalAlign: "middle" }} />
+                <Plus
+                  size={14}
+                  style={{
+                    display: "inline",
+                    marginRight: "6px",
+                    verticalAlign: "middle",
+                  }}
+                />
                 New Message
               </label>
               <textarea
@@ -194,9 +210,7 @@ function App() {
 
         {/* Messages Section */}
         <section className="messages-section">
-          <h2 className="section-title">
-            Messages ({messages.length})
-          </h2>
+          <h2 className="section-title">Messages ({messages.length})</h2>
 
           {messages.length === 0 ? (
             <div className="empty-state">
@@ -211,18 +225,22 @@ function App() {
             <div className="messages-grid">
               {messages.map((msg) => (
                 <article key={msg._id} className="message-card">
-                  <div className="message-content">
-                    {msg.text}
-                  </div>
-                  
+                  <div className="message-content">{msg.text}</div>
+
                   <div className="message-meta">
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                      }}
+                    >
                       <span className="message-id">#{msg._id.slice(-4)}</span>
                       <span className="message-date">
                         {formatDate(msg.createdAt)}
                       </span>
                     </div>
-                    
+
                     <div className="message-actions">
                       <button
                         className="action-btn edit"
@@ -252,7 +270,14 @@ function App() {
         <div className="modal-overlay" onClick={closeEditModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h3 className="modal-title">
-              <Pencil size={20} style={{ display: "inline", marginRight: "8px", verticalAlign: "middle" }} />
+              <Pencil
+                size={20}
+                style={{
+                  display: "inline",
+                  marginRight: "8px",
+                  verticalAlign: "middle",
+                }}
+              />
               Edit Message
             </h3>
             <textarea
@@ -267,8 +292,8 @@ function App() {
                 <X size={16} style={{ marginRight: "6px" }} />
                 Cancel
               </button>
-              <button 
-                className="submit-btn" 
+              <button
+                className="submit-btn"
                 onClick={handleSaveEdit}
                 disabled={!editText.trim()}
               >
@@ -281,11 +306,7 @@ function App() {
       )}
 
       {/* Toast Notification */}
-      {toast && (
-        <div className={`toast ${toast.type}`}>
-          {toast.message}
-        </div>
-      )}
+      {toast && <div className={`toast ${toast.type}`}>{toast.message}</div>}
     </div>
   );
 }
