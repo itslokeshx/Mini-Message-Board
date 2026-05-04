@@ -1,8 +1,9 @@
 # 💬 Mini Message Board
 
-> A clean, minimal full-stack message board application for sharing thoughts instantly.
+> A clean, minimal full-stack message board application for sharing thoughts instantly. Built as part of [The Odin Project](https://www.theodinproject.com/) curriculum.
 
 <p align="center">
+  <img src="https://img.shields.io/badge/The_Odin_Project-E3B261?logo=theodinproject&logoColor=white&style=for-the-badge" alt="The Odin Project">
   <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&style=for-the-badge" alt="React 19">
   <img src="https://img.shields.io/badge/Vite-8-646CFF?logo=vite&style=for-the-badge" alt="Vite 8">
   <img src="https://img.shields.io/badge/Express-5-000000?logo=express&style=for-the-badge" alt="Express 5">
