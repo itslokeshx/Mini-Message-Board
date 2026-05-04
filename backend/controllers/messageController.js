@@ -17,7 +17,9 @@ export const createMessage = async (req, res) => {
     const newMessage = await Message.create({ text });
     res.status(201).json(newMessage);
   } catch (error) {
+    console.log(" POST ERROR:", error);
     res.status(500).json({ error: error.message });
+    console.log(" POST ERROR:", error);
   }
 };
 

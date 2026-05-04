@@ -13,7 +13,7 @@ function App() {
       },
       body: JSON.stringify({ text: inputMessage }),
     });
-
+    console.log("Sending:", inputMessage);
     const newMessage = await response.json();
     setMessages((prev) => [newMessage, ...prev]);
     setInputMessage("");
