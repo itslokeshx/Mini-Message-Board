@@ -6,6 +6,7 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!inputMessage || !inputMessage.trim()) return;
     const response = await fetch("http://localhost:8000/messages", {
       method: "POST",
       headers: {
@@ -28,6 +29,7 @@ function App() {
 
   const handleEdit = async (id) => {
     const newText = prompt("Enter new message:");
+    if (!newText || !newText.trim()) return;
     const response = await fetch(`http://localhost:8000/messages/${id}`, {
       method: "PUT",
       headers: {
