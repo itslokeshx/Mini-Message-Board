@@ -51,15 +51,10 @@ function App() {
 
     setIsLoading(true);
     try {
-      // Generate next available ID
-      const nextId = messages.length > 0 
-        ? Math.max(...messages.map(m => m.id || 0)) + 1 
-        : 1;
-
       const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: nextId, text: trimmedMessage }),
+        body: JSON.stringify({ text: trimmedMessage }),
       });
 
       if (!response.ok) {
@@ -79,9 +74,9 @@ function App() {
   };
 
   // Delete message
-  const handleDelete = async (id, messageId) => {
+  const handleDelete = async (id) => {
     try {
-      const response = await fetch(`${API_URL}/${messageId}`, {
+      const response = await fetch(`${API_URL}/${id}`, {
         method: "DELETE",
       });
 
@@ -112,7 +107,7 @@ function App() {
     if (!trimmedText) return;
 
     try {
-      const response = await fetch(`${API_URL}/${editingMessage.id}`, {
+      const response = await fetch(`${API_URL}/${editingMessage._id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: trimmedText }),
@@ -222,7 +217,7 @@ function App() {
                   
                   <div className="message-meta">
                     <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                      <span className="message-id">#{msg.id}</span>
+                      <span className="message-id">#{msg._id.slice(-4)}</span>
                       <span className="message-date">
                         {formatDate(msg.createdAt)}
                       </span>
@@ -238,7 +233,7 @@ function App() {
                       </button>
                       <button
                         className="action-btn delete"
-                        onClick={() => handleDelete(msg._id, msg.id)}
+                        onClick={() => handleDelete(msg._id)}
                         title="Delete message"
                       >
                         <Trash2 size={16} />
