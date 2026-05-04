@@ -25,6 +25,21 @@ function App() {
     });
     setMessages((prev) => prev.filter((msg) => msg._id !== id));
   };
+
+  const handleEdit = async (id) => {
+    const newText = prompt("Enter new message:");
+    const response = await fetch(`http://localhost:8000/messages/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text: newText }),
+    });
+    const updatedMessage = response.json();
+    setMessages((prev) =>
+      prev.map((msg) => (msg._id === id ? updatedMessage : msg)),
+    );
+  };
   const fetchData = async () => {
     const response = await fetch(`http://localhost:8000/messages/`);
     const data = await response.json();
@@ -48,6 +63,7 @@ function App() {
       {messages.map((msg) => (
         <div key={msg._id}>
           <h1>{msg.text}</h1>
+          <button onClick={() => handleEdit(msg._id)}>Edit!</button>
           <button onClick={() => handleDelete(msg._id)}>Delete</button>
         </div>
       ))}
