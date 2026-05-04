@@ -10,7 +10,8 @@ import {
 } from "lucide-react";
 import "./index.css";
 
-const API_URL = import.meta.env.BACKEND_API_URL;
+const API_URL =
+  import.meta.env.VITE_BACKEND_API_URL || import.meta.env.BACKEND_API_URL;
 
 function App() {
   const [inputMessage, setInputMessage] = useState("");
