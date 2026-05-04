@@ -18,6 +18,13 @@ function App() {
     setMessages((prev) => [newMessage, ...prev]);
     setInputMessage("");
   };
+
+  const handleDelete = async (id) => {
+    await fetch(`http://localhost:8000/messages/${id}`, {
+      method: "DELETE",
+    });
+    setMessages((prev) => prev.filter((msg) => msg._id !== id));
+  };
   const fetchData = async () => {
     const response = await fetch(`http://localhost:8000/messages/`);
     const data = await response.json();
@@ -39,7 +46,10 @@ function App() {
       </form>
 
       {messages.map((msg) => (
-        <h1 key={msg._id}>{msg.text}</h1>
+        <div key={msg._id}>
+          <h1>{msg.text}</h1>
+          <button onClick={() => handleDelete(msg._id)}>Delete</button>
+        </div>
       ))}
     </>
   );
