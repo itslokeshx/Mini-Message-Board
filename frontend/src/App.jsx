@@ -35,7 +35,7 @@ function App() {
       },
       body: JSON.stringify({ text: newText }),
     });
-    const updatedMessage = response.json();
+    const updatedMessage = await response.json();
     setMessages((prev) =>
       prev.map((msg) => (msg._id === id ? updatedMessage : msg)),
     );
