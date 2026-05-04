@@ -24,6 +24,7 @@
 | 🎨 **Modern UI** | Clean interface with Lucide icons |
 | ⚡ **Fast Performance** | Vite-powered HMR and optimized builds |
 | 🔒 **CORS Enabled** | Secure cross-origin requests |
+| ⏰ **Keep-Alive Cron** | Prevents Render free tier from sleeping (14-min pings) |
 
 ---
 
@@ -89,6 +90,7 @@
 | 🍃 Mongoose | 9.6.1 | MongoDB ODM |
 | 🌐 CORS | 2.8.6 | Cross-Origin Requests |
 | 🔐 dotenv | 17.4.2 | Environment Variables |
+| ⏰ node-cron | 3.0.3 | Scheduled Keep-Alive Jobs |
 
 ---
 
@@ -255,6 +257,17 @@ Delete a message.
 ```json
 {
   "message": "Deleted successfully"
+}
+```
+
+#### 🟣 GET /api/health
+Health check endpoint for keep-alive monitoring.
+
+**Response:**
+```json
+{
+  "status": "ok",
+  "timestamp": "2026-05-04T12:00:00.000Z"
 }
 ```
 
