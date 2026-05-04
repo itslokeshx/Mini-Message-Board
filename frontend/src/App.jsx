@@ -4,16 +4,26 @@ function App() {
   const [inputMessage, setInputMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  };
+    const response = await fetch("http://localhost:8000/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text: inputMessage }),
+    });
 
+    const newMessage = await response.json();
+    setMessages((prev) => [newMessage, ...prev]);
+    setInputMessage("");
+  };
+  const fetchData = async () => {
+    const response = await fetch(`http://localhost:8000/messages/`);
+    const data = await response.json();
+    setMessages(data);
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(`http://localhost:8000/messages/`);
-      const data = await response.json();
-      setMessages(data);
-    };
     fetchData();
   }, []);
   return (
